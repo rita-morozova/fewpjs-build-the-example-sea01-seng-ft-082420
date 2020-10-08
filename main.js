@@ -2,8 +2,42 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
-// Your JavaScript code goes here!
+let glyphStates = {
+  '♡': '♥',
+  '♥': '♡'
+};
 
+let colorStates = {
+  "red" : "",
+  "": "red"
+};
+
+// Your JavaScript code goes here! 
+
+// Make likes clickable
+
+let likes = document.querySelectorAll('.like')
+
+function likeArticle(event) {
+  let heart = event.target
+  mimicServerCall()
+    .then(function(serverMessage){
+      alert("You notified the server")
+      alert(serverMessage)
+      heart.innerText = glyphStates[heart.innerText]
+      heart.style.color = colorStates[heart.style.color]
+    })
+      .catch(function(error){
+        alert ("Something went wrong")
+        let modal = document.getElementById('modal')
+        modal.className = ''
+      })
+
+}
+
+for (let glyph of likes) {
+  glyph.addEventListener("click", likeArticle);
+}
 
 
 
